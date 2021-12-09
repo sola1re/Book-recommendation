@@ -82,8 +82,43 @@ def deleteBook():
         book = str(input("enter the book you want to delete : "))
         with open("books.txt",'r',encoding="utf-8") as f:
             lignes = f.readlines()
-            for i in range(len(lignes)):
-                    for j in range(len(lignes[i])):
+            i=0
+            while i<len(lignes) and not book in lignes[i]:
+                    i+=1
+        if i>=len(lignes):
+                print("the book {} is not in the  books of the database".format(book))
+        else:
+                with open("books.txt","w",encoding="utf-8") as f:
+                        for j in range(len(lignes)):
+                                if i!=j:
+                                        f.write(lignes[j])
+                print("the book {} has been deleted from the available books".format(book))
+
+def deleteProfile():
+        profile = str(input("enter the name of the profile you want to delete : "))
+        with open("readers.txt",'r',encoding="utf-8") as f:
+            lignes = f.readlines()
+            i=0
+            while i<len(lignes) and not profile in lignes[i]:
+                    i+=1
+        if i>=len(lignes):
+                print("the profile {} is not in the profile database".format(profile))
+        else:
+                with open("readers.txt","w",encoding="utf-8") as f:
+                        for j in range(len(lignes)):
+                                if i!=j:
+                                        f.write(lignes[j])
+                print("the profile {} has been deleted from the profile list".format(profile))
+
+def viewBooks():
+        with open("books.txt","r",encoding="utf-8") as f:
+                i = 0
+                for ligne in f:
+                        i += 1
+                        print(i, ":", ligne[:-1])
+                sleep(2)
+                print("\n")
+
                             
 
 
@@ -104,9 +139,7 @@ if __name__=='__main__':
                         elif menu_book == 3:
                                 deleteBook()
                         elif menu_book ==4:
-                                """
-                                print the content of the book file
-                                """
+                                viewBooks()
                         elif menu_book == 5:
                                 mainmenu()
 
