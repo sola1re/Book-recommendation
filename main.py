@@ -119,19 +119,30 @@ def viewBooks():
                 sleep(2)
                 print("\n")
 
-                            
-
+def addBook():
+    with open(books, "r") as b:
+        lines = b.readlines()
+        newbook = str(input("Enter the name of the book you want to enter: "))
+        for line in lines:
+            if line != newbook:
+                check = True
+            elif line == newbook:
+                print("The book already exists in the file!")
+                mainmenu()
+        if check:
+            with open(books, "a") as b:
+                b.write("\n" + newbook)
+    sleep(2)         
 
 ########################################Main code starts here############################################################
+
 if __name__=='__main__':
         mainmenu()
         while menu_principal != 4:
                 if menu_principal == 1:
                         menub()
                         if menu_book ==1:
-                                """
-                                Add function to append a book to the book file
-                                """
+                                addBook()
                         elif menu_book == 2:
                                 """
                                 Add function to replace a book by one he enters
