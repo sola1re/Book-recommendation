@@ -120,6 +120,7 @@ def viewBooks():
                 print("\n")
 
 def addBook():
+    check = False
     with open(books, "r") as b:
         lines = b.readlines()
         newbook = str(input("Enter the name of the book you want to enter: "))
