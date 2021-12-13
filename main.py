@@ -11,7 +11,7 @@ books = 'books.txt'
 books_read = 'booksread.txt'
 
 def mainmenu():
-        ## this function display the main menu where the user can chose what he wants ti di
+        ## this function displays the main menu where the user can chose what menu to navigate to: the bbok menu, the reader menu, the recommendation menu, or exit the programm
         global menu_principal
         menu_principal=0
         print("What menu do you want to navigate to?\n")
@@ -20,7 +20,7 @@ def mainmenu():
                 menu_principal = int(input("1 : Book menu\n2 : Reader menu\n3 : Recommendation menu\n4 : Quit\n"))
 
 def menub():
-        ##this function display a sub menu where the user can decide action linked to the book or the list of books
+        ##this function displays a sub menu where the user can decide action linked to the list of books. The options are to modify or delete a book, to view the list of books, or to go back to the main menu
         global menu_book
         menu_book=0
         menu_book=int(input("1 : Add a book\n2 : Modify a book\n3 : Delete a book\n4 : View the book list\n5 : Go back to the main menu\n"))
@@ -29,14 +29,14 @@ def menub():
 
 
 def menureader():
-        ##this function display a sub menu where the user can add, modify ir delete a reader
+        ##this function displays a sub menu where the user can add, modify or delete a reader
         global menu_reader
         menu_reader=0
         print("What do you want to do?\n")
         menu_reader=int(input("1 : Add a reader\n2 : Modify a reader\n3 : Delete a reader\n4 : Go back to the main menu\n"))
 
 def menurecommend():
-        ##this function display a sub menu where the user can rate or find a new book
+        ##this function displays a sub menu where the user can rate books to enhance the algorithm, or find a new book he might enjoy
         global menu_recommend
         menu_recommend=0
         print("What do you want to do?\n")
@@ -45,7 +45,7 @@ def menurecommend():
                 menu_recommend = int(input("1 : Rate books\n2 : Find a new book\n3 : Go back to the main menu\n"))
 
 def newprofile():
-        ##this function allows to create a new profile
+        ##this function allows to create a new user profile. It requires ton enter a name, a gender, an age, and a reading preference among those selected
         global name
         global gender
         global age
@@ -68,8 +68,7 @@ def newprofile():
         mainmenu()
 
 def modifyprofile():
-        ##this function allows to modify a profile
-        #Edit this code so it doesn't print the whole line, but only the profile name, in other words, everything before th first comma
+        ##this function allows to modify an already existing user profile
         with open("readers.txt", "r",encoding="utf-8") as f:
                 i = 0
                 for ligne in f:
@@ -79,6 +78,7 @@ def modifyprofile():
         modreader = int(input("What line do you want to modify? \n"))
 
 def deleteBook():
+        ##This function allows the user to delete a book from the list only if it already exists
         book = str(input("enter the book you want to delete : "))
         with open("books.txt",'r',encoding="utf-8") as f:
             lignes = f.readlines()
@@ -95,6 +95,7 @@ def deleteBook():
                 print("the book {} has been deleted from the available books".format(book))
 
 def deleteProfile():
+        ##This function allows to delete an already existing user profile 
         profile = str(input("enter the name of the profile you want to delete : "))
         with open("readers.txt",'r',encoding="utf-8") as f:
             lignes = f.readlines()
@@ -111,6 +112,7 @@ def deleteProfile():
                 print("the profile {} has been deleted from the profile list".format(profile))
 
 def viewBooks():
+        ##This function allows to desplay the list of books by printing the content of the 'books.txt' file
         with open("books.txt","r",encoding="utf-8") as f:
                 i = 0
                 for ligne in f:
@@ -120,6 +122,7 @@ def viewBooks():
                 print("\n")
 
 def addBook():
+        ##This function allows the user to add a new book to the list only if it doesn't already exist
     check = False
     with open(books, "r") as b:
         lines = b.readlines()
