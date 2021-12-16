@@ -13,7 +13,7 @@ books = 'books.txt'
 books_read = 'booksread.txt'
 
 def mainmenu():
-        ## this function displays the main menu where the user can chose what menu to navigate to: the bbok menu, the reader menu, the recommendation menu, or exit the programm
+## this function displays the main menu where the user can chose what menu to navigate to: the bbok menu, the reader menu, the recommendation menu, or exit the programm
         global menu_principal
         menu_principal=0
         print("What menu do you want to navigate to?\n")
@@ -121,20 +121,40 @@ def modifyProfile():
                         style = str(input("What is you readin style?\n1 : Science-Fiction\n2 : Biography\n3 : Horreur\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
                         while int(style) > 7 or int(style) < 1:
                                 style = str(input("What is you readin style?\n1 : Science-Fiction\n2 : Biography\n3 : Horreur\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
-                        newProfile+=style
+                        newProfile+=style+"\n"
                 else:
                         newProfile+=str(modif[3])
                 print("the profile is now {}".format(newProfile))
                 with open("readers.txt","w",encoding="utf-8") as f:
                         for j in range(len(lignes)):
                                 if i==j:
-                                        f.write(newProfile+"\n")
+                                        f.write(newProfile)
                                 else:
                                         f.write(lignes[j])
 
+def replaceBook():
+        ##this function allows to replace a book by another one
+        viewBooks()
+        with open("books.txt", "r", encoding="utf-8") as f:
+                lignes = f.readlines()
+                book = str(input("enter the name of the book you want to replace : "))
+                i = 0
+                while i < len(lignes) and not book in lignes[i]:
+                        i += 1
+        if i >= len(lignes):
+                print("the book {} is not in the books database".format(book))
+        else:
+                new_book=str(input("you want to replace the book {} by ".format(book)))
+        with open("books.txt", "w", encoding="utf-8") as f:
+                for j in range(len(lignes)):
+                        if i == j:
+                                f.write(new_book)
+                        else:
+                                f.write(lignes[j])
 
 def deleteBook():
         ##This function allows the user to delete a book from the list only if it already exists
+        viewBooks()
         book = str(input("enter the book you want to delete : "))
         with open("books.txt",'r',encoding="utf-8") as f:
             lignes = f.readlines()
@@ -142,16 +162,17 @@ def deleteBook():
             while i<len(lignes) and not book in lignes[i]:
                     i+=1
         if i>=len(lignes):
-                print("the book {} is not in the  books of the database".format(book))
+                print("the book {} is not in the  books of the database\n.format(book))
         else:
                 with open("books.txt","w",encoding="utf-8") as f:
                         for j in range(len(lignes)):
                                 if i!=j:
                                         f.write(lignes[j])
-                print("the book {} has been deleted from the available books".format(book))
+                print("the book {} has been deleted from the available books\n".format(book))
 
 def deleteProfile():
-        ##This function allows to delete an already existing user profile 
+        ##This function allows to delete an already existing user profile
+        viewReaders()
         profile = str(input("enter the name of the profile you want to delete : "))
         with open("readers.txt",'r',encoding="utf-8") as f:
             lignes = f.readlines()
@@ -159,13 +180,13 @@ def deleteProfile():
             while i<len(lignes) and not profile in lignes[i]:
                     i+=1
         if i>=len(lignes):
-                print("the profile {} is not in the profile database".format(profile))
+                print("the profile {} is not in the profile database\n".format(profile))
         else:
                 with open("readers.txt","w",encoding="utf-8") as f:
                         for j in range(len(lignes)):
                                 if i!=j:
                                         f.write(lignes[j])
-                print("the profile {} has been deleted from the profile list".format(profile))
+                print("the profile {} has been deleted from the profile list\n".format(profile))
 
 def viewBooks():
         ##This function allows to desplay the list of books by printing the content of the 'books.txt' file
@@ -177,8 +198,19 @@ def viewBooks():
                 sleep(2)
                 print("\n")
 
+def viewReaders():
+        ##This function allows to desplay the list of books by printing the content of the 'books.txt' file
+        with open("readers.txt ","r",encoding="utf-8") as f:
+                i = 0
+                for ligne in f:
+                        i += 1
+                        print(i, ":", ligne[:-1])
+                sleep(2)
+                print("\n")
+
 def addBook():
-        ##This function allows the user to add a new book to the list only if it doesn't already exist
+##This function allows the user to add a new book to the list only if it doesn't already exist
+    viewBooks()
     check = False
     with open(books, "r") as b:
         lines = b.readlines()
@@ -187,7 +219,7 @@ def addBook():
             if line != newbook:
                 check = True
             elif line == newbook:
-                print("The book already exists in the file!")
+                print("The book already exists in the file!\n")
                 mainmenu()
         if check:
             with open(books, "a") as b:
@@ -204,9 +236,7 @@ if __name__=='__main__':
                         if menu_book ==1:
                                 addBook()
                         elif menu_book == 2:
-                                """
-                                Add function to replace a book by one he enters
-                                """
+                                replaceBook()
                         elif menu_book == 3:
                                 deleteBook()
                         elif menu_book ==4:
@@ -219,11 +249,9 @@ if __name__=='__main__':
                         if menu_reader ==1:
                                 newprofile()
                         elif menu_reader ==2:
-                                modifyprofile() #can be improved, see the function for more
+                                modifyProfile() #can be improved, see the function for more
                         elif menu_reader ==3:
-                                """
-                                Function to delete a line
-                                """
+                                deleteProfile()
                         elif menu_reader ==4:
                                 mainmenu()
 
