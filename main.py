@@ -19,7 +19,7 @@ def mainmenu():
         menu_principal=0
         print("What menu do you want to navigate to?\n")
         menu_principal=int(input("1 : Book menu\n2 : Reader menu\n3 : Recommendation menu\n4 : Quit\n"))
-        ##The input is secured with while loops
+        ##The input is secured with a while loop
         while menu_principal>4 or menu_principal<1:
                 menu_principal = int(input("1 : Book menu\n2 : Reader menu\n3 : Recommendation menu\n4 : Quit\n"))
 
@@ -29,7 +29,7 @@ def menub():
         global menu_book
         menu_book=0
         menu_book=int(input("1 : Add a book\n2 : Modify a book\n3 : Delete a book\n4 : View the book list\n5 : Go back to the main menu\n"))
-        ##The input is secured with while loops
+        ##The input is secured with a while loop
         while menu_book<1 or menu_book>5:
                 menu_book = int(input("1 : Add a book\n2 : Modify a book\n3 : Delete a book\n4 : View the book list\n5 : Go back to the main menu\n"))
 
@@ -39,13 +39,13 @@ def menureader():
         global menu_reader
         menu_reader=0
         print("What do you want to do?\n")
-        ##The input is secured with while loops
+        ##The input is secured with a while loop
         while menu_reader<1 or menu_reader>4:
                 menu_reader=int(input("1 : Add a reader\n2 : Modify a reader\n3 : Delete a reader\n4 : Go back to the main menu\n"))
 
 def menurecommend():
         ##this function displays a sub menu where the user can rate books to enhance the algorithm, or find a new book he might enjoy
-        ##The input is secured with while loops
+        ##The input is secured with a while loop
         global menu_recommend
         menu_recommend=0
         print("What do you want to do?\n")
@@ -55,7 +55,7 @@ def menurecommend():
 
 def newprofile():
         ##this function allows to create a new user profile. It requires ton enter a name, a gender, an age, and a reading preference among those selected
-        ##The inputs are secured with while loops
+        ##The inputs are secured with a while loop
         global name
         global gender
         global age
