@@ -69,15 +69,69 @@ def newprofile():
         sleep(2)
         mainmenu()
 
-def modifyprofile():
-        ##this function allows to modify an already existing user profile
+def modifyProfile():
+        ##this function allows to modify a profile
         with open("readers.txt", "r",encoding="utf-8") as f:
-                i = 0
-                for ligne in f:
-                        i += 1
-                        print(i, ":", ligne[:-1])
-        f.close()
-        modreader = int(input("What line do you want to modify? \n"))
+                lignes = f.readlines()
+                for ligne in lignes:
+                        print(ligne[:-1])
+                profile = str(input("enter the name of the profile you want to modify : "))
+                i=0
+                while i<len(lignes) and not profile in lignes[i]:
+                        i+=1
+        if i>=len(lignes):
+                print("the profile {} is not in the profile database".format(profile))
+        else:
+                modif=lignes[i].split(",")
+                newProfile=""
+                name_change=str(input("do you want to change your name(y/n)? "))
+                while name_change!='y' and name_change!='n':
+                        name_change = str(input("do you want to change your name(y/n)? "))
+                if name_change=='y':
+                        newProfile+=str(input("What's your name?\n"))
+                else:
+                        newProfile+=str(modif[0])
+                newProfile+=","
+                gender_change=str(input("do you want to change your gender(y/n)? "))
+                while gender_change!='y' and gender_change!='n':
+                        gender_change = str(input("do you want to change your gender(y/n)? "))
+                if gender_change=='y':
+                        gender = str(input("Gender selection\n1 : You are a male\n2 : You are a female\n3 : Other\n"))
+                        while int(gender) > 3 or int(gender) < 1:
+                                gender = int(input("Gender selection\n1 : You are a male\n2 : You are a female\n3 : Other\n"))
+                        newProfile+=gender
+                else:
+                        newProfile+=str(modif[1])
+                newProfile+=","
+                age_change = str(input("do you want to change your age group(y/n)? "))
+                while age_change != 'y' and age_change != 'n':
+                        age_change = str(input("do you want to change your age(y/n)? "))
+                if age_change == 'y':
+                        age = str(input("What is your age group?\n1: below 18\n2: between 18 and 25\n3: above 25\n"))
+                        while int(age) < 1 or int(age) > 3:
+                                age = str(input("What is your age group?\n1: below 18\n2: between 18 and 25\n3: above 25\n"))
+                        newProfile += age
+                else:
+                        newProfile += str(modif[2])
+                newProfile+=","
+                genre_change = str(input("do you want to change your favourite genre(y/n)? "))
+                while genre_change != 'y' and genre_change != 'n':
+                        genre_change_change = str(input("do you want to change your age(y/n)? "))
+                if genre_change == 'y':
+                        style = str(input("What is you readin style?\n1 : Science-Fiction\n2 : Biography\n3 : Horreur\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
+                        while int(style) > 7 or int(style) < 1:
+                                style = str(input("What is you readin style?\n1 : Science-Fiction\n2 : Biography\n3 : Horreur\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
+                        newProfile+=style
+                else:
+                        newProfile+=str(modif[3])
+                print("the profile is now {}".format(newProfile))
+                with open("readers.txt","w",encoding="utf-8") as f:
+                        for j in range(len(lignes)):
+                                if i==j:
+                                        f.write(newProfile+"\n")
+                                else:
+                                        f.write(lignes[j])
+
 
 def deleteBook():
         ##This function allows the user to delete a book from the list only if it already exists
