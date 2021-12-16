@@ -19,14 +19,17 @@ def mainmenu():
         menu_principal=0
         print("What menu do you want to navigate to?\n")
         menu_principal=int(input("1 : Book menu\n2 : Reader menu\n3 : Recommendation menu\n4 : Quit\n"))
+        ##The input is secured with while loops
         while menu_principal>4 or menu_principal<1:
                 menu_principal = int(input("1 : Book menu\n2 : Reader menu\n3 : Recommendation menu\n4 : Quit\n"))
 
 def menub():
-        ##this function displays a sub menu where the user can decide action linked to the list of books. The options are to modify or delete a book, to view the list of books, or to go back to the main menu
+        ##this function displays a sub menu where the user can decide action linked to the list of books. 
+        ##The options are to modify or delete a book, to view the list of books, or to go back to the main menu
         global menu_book
         menu_book=0
         menu_book=int(input("1 : Add a book\n2 : Modify a book\n3 : Delete a book\n4 : View the book list\n5 : Go back to the main menu\n"))
+        ##The input is secured with while loops
         while menu_book<1 or menu_book>5:
                 menu_book = int(input("1 : Add a book\n2 : Modify a book\n3 : Delete a book\n4 : View the book list\n5 : Go back to the main menu\n"))
 
@@ -36,10 +39,13 @@ def menureader():
         global menu_reader
         menu_reader=0
         print("What do you want to do?\n")
-        menu_reader=int(input("1 : Add a reader\n2 : Modify a reader\n3 : Delete a reader\n4 : Go back to the main menu\n"))
+        ##The input is secured with while loops
+        while menu_reader<1 or menu_reader>4:
+                menu_reader=int(input("1 : Add a reader\n2 : Modify a reader\n3 : Delete a reader\n4 : Go back to the main menu\n"))
 
 def menurecommend():
         ##this function displays a sub menu where the user can rate books to enhance the algorithm, or find a new book he might enjoy
+        ##The input is secured with while loops
         global menu_recommend
         menu_recommend=0
         print("What do you want to do?\n")
@@ -49,6 +55,7 @@ def menurecommend():
 
 def newprofile():
         ##this function allows to create a new user profile. It requires ton enter a name, a gender, an age, and a reading preference among those selected
+        ##The inputs are secured with while loops
         global name
         global gender
         global age
@@ -77,7 +84,11 @@ def newprofile():
         mainmenu()
 
 def modifyProfile():
-        ##this function allows to modify a profile
+        ##This function allows to modify a profile
+        ##It asks the user the name of the profile he wants to modify
+        ##If the name of the profile exists, then it asks the user what information he wants changed: name, age, gender, reading style, or recommendation algorithm
+        ##The inputs are all secured with while loops
+        ##The rating matrix is also edited accordingly
         with open("readers.txt", "r",encoding="utf-8") as f, open(rating_matrix,'r',encoding='utf-8') as g:
                 lignes = f.readlines()
                 matrix = g.readlines()
@@ -139,9 +150,9 @@ def modifyProfile():
                                         f.write(newProfile)
                                 else:
                                         f.write(lignes[j])
-                reco_change = str(input("do you want to reset your recomandation's algorithm(y/n)? "))
+                reco_change = str(input("do you want to reset your recomandation algorithm(y/n)? "))
                 while reco_change != 'y' and reco_change != 'n':
-                        reco_change = str(input("do you want to reset your recomandation's algorithm(y/n)? "))
+                        reco_change = str(input("do you want to reset your recomandation algorithm(y/n)? "))
                 if reco_change == 'y':
                         with  open(rating_matrix, "w", encoding="utf-8") as f, open("books.txt", "r", encoding="utf-8") as f1:
                                 books = f1.readlines()
@@ -156,7 +167,9 @@ def modifyProfile():
                                                 f.write(matrix[j])
 
 def replaceBook():
-        ##this function allows to replace a book by another one
+        ##This function asks the user for the name of the book he wants to be replaced 
+        ##The file is then edited in the proper way, the matrix is also edited accordingly
+        ##The inputs are all secured with while loops
         viewBooks()
         with open("books.txt", "r", encoding="utf-8") as f1, open(rating_matrix,"r",encoding="utf_8") as f2 :
                 lignes = f1.readlines()
@@ -189,6 +202,8 @@ def replaceBook():
 
 def deleteBook():
         ##This function allows the user to delete a book from the list only if it already exists
+        ##The rating matrix is also edited accordingly
+        ##The inputs are all secured with while loops
         viewBooks()
         with open("books.txt", "r", encoding="utf-8") as f1, open(rating_matrix, "r", encoding="utf_8") as f2:
                 lignes = f1.readlines()
@@ -215,7 +230,9 @@ def deleteBook():
                                 f.write(" ".join(new_matrice_line) + "\n")
 
 def deleteProfile():
-        ##This function allows to delete an already existing user profile
+        ##This function allows to delete a user profile, but only if it exists
+        ##The rating matrix is also edited accordingly
+        ##The inputs are all secured with while loops
         viewReaders()
         profile = str(input("enter the name of the profile you want to delete : "))
         with open("readers.txt","r",encoding="utf-8") as f1, open(rating_matrix,"r",encoding="utf-8") as f2:
@@ -240,6 +257,7 @@ def deleteProfile():
 
 def viewBooks():
         ##This function allows to desplay the list of books by printing the content of the 'books.txt' file
+        ##The file is printed line by line
         with open("books.txt","r",encoding="utf-8") as f:
                 i = 0
                 for ligne in f:
@@ -249,6 +267,7 @@ def viewBooks():
 
 def viewReaders():
         ##This function allows to desplay the list of books by printing the content of the 'books.txt' file
+        ##The file is printed line by line
         with open("readers.txt ","r",encoding="utf-8") as f:
                 i = 0
                 for ligne in f:
@@ -257,7 +276,9 @@ def viewReaders():
                 print("\n")
 
 def addBook():
-##This function allows the user to add a new book to the list only if it doesn't already exist
+        ##This function allows the user to add a new book to the list only if it doesn't already exist
+        ##The rating matrix is also edited accordingly
+        ##The inputs are all secured with while loops
         viewBooks()
         with open("books.txt", "r", encoding="utf-8") as f1, open(rating_matrix, "r", encoding="utf_8") as f2:
                 lignes = f1.readlines()
@@ -284,6 +305,7 @@ def addBook():
                                 f.write(" ".join(new_matrice_line) + "\n")
 
 def matrixCreation():
+        ##This function creates the rating matrix, which takes into account the reader's prerferences
         with open(rating_matrix,"r",encoding="utf_8") as f:
                 lignes = f.readlines()
                 if lignes==[]:
@@ -298,7 +320,10 @@ def matrixCreation():
                                         f.write("\n")
 
 
-########################################Main code starts here############################################################
+#########################################################################################################################
+#######################################-The Main code starts here-#######################################################
+#########################################################################################################################
+
 
 if __name__=='__main__':
         matrixCreation()
