@@ -1,2 +1,2 @@
 # Book-recommendation
-Python project for an algorithmim-based book recommendation programm
+Python project for an algorithmim-based book recommendation program
