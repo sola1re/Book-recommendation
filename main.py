@@ -28,6 +28,7 @@ def menub():
         ##The options are to modify or delete a book, to view the list of books, or to go back to the main menu
         global menu_book
         menu_book=0
+        print("What do you want to do?\n")
         menu_book=int(input("1 : Add a book\n2 : Modify a book\n3 : Delete a book\n4 : View the book list\n5 : Go back to the main menu\n"))
         ##The input is secured with a while loop
         while menu_book<1 or menu_book>5:
@@ -60,6 +61,7 @@ def newprofile():
         global gender
         global age
         global style
+        ##Declaration of global variables we will need in other functions
         name = str(input("What is your name?\n"))
         gender = str(input("Gender selection\n1 : You are a male\n2 : You are a female\n3 : Other\n"))
         while int(gender)>3 or int(gender)<1:
@@ -321,14 +323,16 @@ def matrixCreation():
 
 
 #########################################################################################################################
-#######################################-The Main code starts here-#######################################################
+##########################################-The Main code starts here-####################################################
 #########################################################################################################################
 
 
 if __name__=='__main__':
         matrixCreation()
+        ##In this part of the code, we implement all the functions and how the user can navigate through them
         mainmenu()
         while menu_principal != 4:
+                ##This is the implementation of the 1st part: the reader profiles
                 if menu_principal == 1:
                         menub()
                         if menu_book ==1:
@@ -341,7 +345,7 @@ if __name__=='__main__':
                                 viewBooks()
                         elif menu_book == 5:
                                 mainmenu()
-
+                ##This is the implementation of the 2nd part: the book depository
                 elif menu_principal == 2:
                         menureader()
                         if menu_reader ==1:
@@ -352,7 +356,7 @@ if __name__=='__main__':
                                 deleteProfile()
                         elif menu_reader ==4:
                                 mainmenu()
-
+                ##This is the implementation of the 3rd part: the recommendation
                 elif menu_principal == 3:
                         menurecommend()
                         if menu_recommend ==1:
