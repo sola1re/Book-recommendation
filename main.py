@@ -27,19 +27,22 @@ def mainmenu():
         print("What menu do you want to navigate to?\n")
         menu_principal=int(input("1 : Book menu\n2 : Reader menu\n3 : Recommendation menu\n4 : Quit\n"))
         ##The input is secured with a while loop
-        while menu_principal>4 or menu_principal<1:
-                menu_principal = int(input("1 : Book menu\n2 : Reader menu\n3 : Recommendation menu\n4 : Quit\n"))
+        menu_principal = int(inputVerfication(str(menu_principal),1,4))
+
+def inputVerfication(user_input,lowerValue,higherValue):
+        while int(user_input)<lowerValue or int(user_input)>higherValue:
+                user_input=str(input("wrong value, please enter the value again (must be between {} and {}) : ".format(lowerValue,higherValue)))
+        return user_input
 
 def menub():
-        ##this function displays a sub menu where the user can decide action linked to the list of books. 
+        ##this function displays a sub menu where the user can decide action linked to the list of books.
         ##The options are to modify or delete a book, to view the list of books, or to go back to the main menu
         global menu_book
         menu_book=0
         print("What do you want to do?\n")
         menu_book=int(input("1 : Add a book\n2 : Modify a book\n3 : Delete a book\n4 : View the book list\n5 : Go back to the main menu\n"))
         ##The input is secured with a while loop
-        while menu_book<1 or menu_book>5:
-                menu_book = int(input("1 : Add a book\n2 : Modify a book\n3 : Delete a book\n4 : View the book list\n5 : Go back to the main menu\n"))
+        menu_book = inputVerfication(menu_book,1,5)
 
 
 def menureader():
@@ -71,16 +74,13 @@ def newprofile():
         ##Declaration of global variables we will need to use in other functions
         name = str(input("What is your name?\n"))
         gender = str(input("Gender selection\n1 : You are a male\n2 : You are a female\n3 : Other\n"))
-        while int(gender)>3 or int(gender)<1:
-                menu_recommend = int(input("1 : Rate books\n2 : Find a new book\n3 : Go back to the main menu\n"))
+        verified_gender = inputVerfication(gender,1,3)
         age = str(input("What is your age group?\n1: below 18\n2: between 18 and 25\n3: above 25\n"))
-        while int(age)<1 or int(age)>3:
-                age = str(input("What is your age group?\n1: below 18\n2: between 18 and 25\n3: above 25\n"))
+        verified_age = inputVerfication(age,1,3)
         style = str(input("What is you readin style?\n1 : Science-Fiction\n2 : Biography\n3 : Horreur\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
-        while int(style)>7 or int(style)<1:
-                style = str(input("What is you readin style?\n1 : Science-Fiction\n2 : Biography\n3 : Horreur\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
+        verified_style = inputVerfication(style,1,7)
         with open(readers, "a", encoding='utf-8') as f:
-                f.write("{},{},{},{}\n".format(name,gender,age,style))
+                f.write("{},{},{},{}\n".format(name,verified_gender,verified_age,verified_style))
         with  open(rating_matrix,"a",encoding="utf-8") as f, open("books.txt","r",encoding="utf-8") as f1:
                 books=f1.readlines()
                 new_line_recommandation = []
@@ -125,8 +125,7 @@ def modifyProfile():
                         gender_change = str(input("do you want to change your gender(y/n)? "))
                 if gender_change=='y':
                         gender = str(input("Gender selection\n1 : You are a male\n2 : You are a female\n3 : Other\n"))
-                        while int(gender) > 3 or int(gender) < 1:
-                                gender = int(input("Gender selection\n1 : You are a male\n2 : You are a female\n3 : Other\n"))
+                        gender = inputVerfication(gender, 1, 3)
                         newProfile+=gender
                 else:
                         newProfile+=str(modif[1])
@@ -136,19 +135,17 @@ def modifyProfile():
                         age_change = str(input("do you want to change your age(y/n)? "))
                 if age_change == 'y':
                         age = str(input("What is your age group?\n1: below 18\n2: between 18 and 25\n3: above 25\n"))
-                        while int(age) < 1 or int(age) > 3:
-                                age = str(input("What is your age group?\n1: below 18\n2: between 18 and 25\n3: above 25\n"))
+                        age = inputVerfication(age,1,3)
                         newProfile += age
                 else:
                         newProfile += str(modif[2])
                 newProfile+=","
-                genre_change = str(input("do you want to change your favourite genre(y/n)? "))
-                while genre_change != 'y' and genre_change != 'n':
+                style_change = str(input("do you want to change your favourite genre(y/n)? "))
+                while style_change != 'y' and style_change != 'n':
                         genre_change_change = str(input("do you want to change your age(y/n)? "))
-                if genre_change == 'y':
+                if style_change == 'y':
                         style = str(input("What is you readin style?\n1 : Science-Fiction\n2 : Biography\n3 : Horreur\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
-                        while int(style) > 7 or int(style) < 1:
-                                style = str(input("What is you readin style?\n1 : Science-Fiction\n2 : Biography\n3 : Horreur\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
+                        style = inputVerfication(style,1,7)
                         newProfile+=style+"\n"
                 else:
                         newProfile+=str(modif[3])
@@ -176,7 +173,7 @@ def modifyProfile():
                                                 f.write(matrix[j])
 
 def replaceBook():
-        ##This function asks the user for the name of the book he wants to be replaced 
+        ##This function asks the user for the name of the book he wants to be replaced
         ##The file is then edited in the proper way, the matrix is also edited accordingly
         ##The inputs are all secured with while loops
         viewBooks()
@@ -245,11 +242,11 @@ def deleteProfile():
         viewReaders()
         profile = str(input("enter the name of the profile you want to delete : "))
         with open("readers.txt","r",encoding="utf-8") as f1, open(rating_matrix,"r",encoding="utf-8") as f2:
-            lignes = f1.readlines()
-            matrice = f2.readlines()
-            i=0
-            while i<len(lignes) and not profile in lignes[i]:
-                    i+=1
+                lignes = f1.readlines()
+                matrice = f2.readlines()
+                i=0
+                while i<len(lignes) and not profile in lignes[i]:
+                        i+=1
         if i>=len(lignes):
                 print("the profile {} is not in the profile database\n".format(profile))
         else:
@@ -317,17 +314,54 @@ def matrixCreation():
         ##This function creates the rating matrix, which takes into account the user's reading prerferences
         with open(rating_matrix,"r",encoding="utf_8") as f:
                 lignes = f.readlines()
-                if lignes==[]:
-                        with open(rating_matrix,"w",encoding="utf_8") as f, open("books.txt","r",encoding="utf-8") as f1, open("readers.txt","r",encoding="utf-8") as f2:
-                                books=f1.readlines()
-                                users=f2.readlines()
-                                for i in range(len(users)):
-                                        new_line=[]
-                                        for j in range  (len(books)):
-                                                new_line.append("0")
-                                        f.write(" ".join(new_line))
-                                        f.write("\n")
+        if lignes==[]:
+                with open(rating_matrix,"w",encoding="utf_8") as f, open("books.txt","r",encoding="utf-8") as f1, open("readers.txt","r",encoding="utf-8") as f2:
+                        books=f1.readlines()
+                        users=f2.readlines()
+                        for i in range(len(users)):
+                                new_line=[]
+                                for j in range  (len(books)):
+                                        new_line.append("0")
+                                f.write(" ".join(new_line))
+                                f.write("\n")
 
+def createBookRead():
+        with open(books_read,"r",encoding="utf_8") as f:
+                lignes = f.readlines()
+        if lignes==[]:
+                with open(books_read,"w",encoding="utf-8") as f1, open(readers,"r",encoding="utf-8") as f2:
+                        users=f2.readlines()
+                        for i in range(len(users)):
+                                user=users[i].split(",")
+                                f1.write(user[0])
+                                f1.write("\n")
+
+def rateBook():
+        global readers
+        global books
+        global books_read
+        global rating_matrix
+        viewReaders()
+        user = str(input("enter your pofile name : "))
+        with open(readers,"r",encoding="utf-8") as f:
+                lignes = f.readlines()
+                i=0
+                while i<len(lignes) and not profile in lignes[i]:
+                        i+=1
+        if i>=len(lignes):
+                print("the profile {} is not in the profile database\n".format(profile))
+        else:
+                viewBooks()
+                numberBooksRead = str(input("how many books did you read ?"))
+                with open(books,"r",encoding="utf-8") as f:
+                        booksList=f.readlines()
+                        i=0
+                        booksRead=[]
+                        while i<len(booksList) and i<numberBooksRead:
+                                numberBook= str(input("enter the number of the book read : "))
+                                numberBook = inputVerfication(numberBook,1,len(booksList))
+                                booksRead.append(numberBook)
+                        booksRead.sort()
 
 #########################################################################################################################
 ##########################################-The Main code starts here-####################################################
@@ -336,6 +370,7 @@ def matrixCreation():
 
 if __name__=='__main__':
         matrixCreation()
+        createBookRead()
         ##In this part of the code, we implement all the functions and how the user can navigate through them
         mainmenu()
         while menu_principal != 4:
