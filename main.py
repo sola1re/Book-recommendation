@@ -77,8 +77,10 @@ def newprofile():
         verified_gender = inputVerfication(gender,1,3)
         age = str(input("What is your age group?\n1: below 18\n2: between 18 and 25\n3: above 25\n"))
         verified_age = inputVerfication(age,1,3)
-        style = str(input("What is you readin style?\n1 : Science-Fiction\n2 : Biography\n3 : Horreur\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
-        verified_style = inputVerfication(style,1,7)
+        style = str(input("What is you reading style?\n1 : Science-Fiction\n2 : Biography\n3 : Autobiography\n4 : Horreur\n"
+                          "5 : Thriller\n6 : Crime\n7 : Romance\n8 : Fable\n9 : History\n10 : Comedy\n"
+                          "11 : Fantasy\n12 : Legends and myths\n13 : Newspaper\n14 : Encyclopedia\n"))
+        verified_style = inputVerfication(style,1,14)
         with open(readers, "a", encoding='utf-8') as f:
                 f.write("{},{},{},{}\n".format(name,verified_gender,verified_age,verified_style))
         with  open(rating_matrix,"a",encoding="utf-8") as f, open("books.txt","r",encoding="utf-8") as f1:
@@ -146,8 +148,10 @@ def modifyProfile():
                 while style_change != 'y' and style_change != 'n':
                         genre_change_change = str(input("do you want to change your age(y/n)? "))
                 if style_change == 'y':
-                        style = str(input("What is you readin style?\n1 : Science-Fiction\n2 : Biography\n3 : Horreur\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
-                        style = inputVerfication(style,1,7)
+                        style = str(input("What is your reading style?\n1: Science - Fiction\n2: Biography\n3: Autobiography\n4: Horreur\n"
+                        "5 : Thriller\n6 : Crime\n7 : Romance\n8 : Fable\n9 : History\n10 : Comedy\n"
+                        "11 : Fantasy\n12 : Legends and myths\n13 : Newspaper\n14 : Encyclopedia\n"))
+                        style = inputVerfication(style,1,14)
                         newProfile+=style+"\n"
                 else:
                         newProfile+=str(modif[3])
