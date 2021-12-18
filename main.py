@@ -88,6 +88,8 @@ def newprofile():
                         new_line_recommandation.append("0")
                 f.write(" ".join(new_line_recommandation))
                 f.write("\n")
+        with open(books_read,"a",encoding="utf-8") as f:
+                f.write(name)
         print("Your profile has successfully been added!\n")
         sleep(2)
         mainmenu()
@@ -156,30 +158,34 @@ def modifyProfile():
                                         f.write(newProfile)
                                 else:
                                         f.write(lignes[j])
-                reco_change = str(input("do you want to reset your recomandation algorithm(y/n)? "))
-                while reco_change != 'y' and reco_change != 'n':
-                        reco_change = str(input("do you want to reset your recomandation algorithm(y/n)? "))
-                if reco_change == 'y':
-                        with  open(rating_matrix, "w", encoding="utf-8") as f, open("books.txt", "r", encoding="utf-8") as f1:
-                                books = f1.readlines()
-                                for j in range(len(matrix)):
-                                        if i == j:
-                                                new_line_recommandation = []
-                                                for k in range(len(books)):
-                                                        new_line_recommandation.append("0")
-                                                f.write(" ".join(new_line_recommandation))
-                                                f.write("\n")
-                                        else:
-                                                f.write(matrix[j])
+                with  open(rating_matrix, "w", encoding="utf-8") as f, open("books.txt", "r", encoding="utf-8") as f1:
+                        books = f1.readlines()
+                        for j in range(len(matrix)):
+                                if i == j:
+                                        new_line_recommandation = []
+                                        for k in range(len(books)):
+                                                new_line_recommandation.append("0")
+                                        f.write(" ".join(new_line_recommandation))
+                                        f.write("\n")
+                                else:
+                                        f.write(matrix[j])
+                with open(books_read,"r",encoding="utf-8") as f:
+                        for j in range(len(matrix)):
+                                if i == j:
+                                        f.write(newProfile)
+                                else:
+                                         f.write(matrix[j])
+
 
 def replaceBook():
         ##This function asks the user for the name of the book he wants to be replaced
         ##The file is then edited in the proper way, the matrix is also edited accordingly
         ##The inputs are all secured with while loops
         viewBooks()
-        with open("books.txt", "r", encoding="utf-8") as f1, open(rating_matrix,"r",encoding="utf_8") as f2 :
+        with open("books.txt", "r", encoding="utf-8") as f1, open(rating_matrix,"r",encoding="utf_8") as f2, open(books_read,"r",encoding="utf-8") as f3 :
                 lignes = f1.readlines()
                 matrice = f2.readlines()
+                booksRead = f3.readlines()
                 book = str(input("enter the name of the book you want to replace : "))
                 i = 0
                 while i < len(lignes) and not book in lignes[i]:
@@ -204,6 +210,14 @@ def replaceBook():
                                 else:
                                         new_matrice_line.append(old_matrice_line[k])
                         f.write(" ".join(new_matrice_line)+"\n")
+        with open(books_read,"w",encoding="utf-8") as f:
+                for j in range(len(booksRead)):
+                        old_line = booksRead.strip("\n").split(",")
+                        new_line = []
+                        for k in range(len(old_line)):
+                                if  not old_line[k]==str(i):
+                                        new_line.append(old_line[k])
+                        f.write(",".join(new_line)+"\n")
 
 
 def deleteBook():
@@ -211,9 +225,10 @@ def deleteBook():
         ##The rating matrix is also edited accordingly
         ##The inputs are all secured with while loops
         viewBooks()
-        with open("books.txt", "r", encoding="utf-8") as f1, open(rating_matrix, "r", encoding="utf_8") as f2:
+        with open("books.txt", "r", encoding="utf-8") as f1, open(rating_matrix, "r", encoding="utf_8") as f2, open(books_read, "r", encoding="utf-8") as f3:
                 lignes = f1.readlines()
                 matrice = f2.readlines()
+                booksRead = f3.readlines()
         book = str(input("enter the name of the book you want to replace : "))
         i=0
         while i<len(lignes) and not book in lignes[i]:
@@ -234,6 +249,14 @@ def deleteBook():
                                         if k != i:
                                                 new_matrice_line.append(old_matrice_line[k])
                                 f.write(" ".join(new_matrice_line) + "\n")
+                with open(books_read,"w",encoding="utf-8") as f:
+                        for j in range(len(booksRead)):
+                                old_line = booksRead.strip("\n").split(",")
+                                new_line = []
+                                for k in range(len(old_line)):
+                                        if  not old_line[k]==str(i):
+                                                new_line.append(old_line[k])
+                                f.write(",".join(new_line)+"\n")
 
 def deleteProfile():
         ##This function allows to delete a user profile, but only if it exists
@@ -241,9 +264,10 @@ def deleteProfile():
         ##The inputs are all secured with while loops
         viewReaders()
         profile = str(input("enter the name of the profile you want to delete : "))
-        with open("readers.txt","r",encoding="utf-8") as f1, open(rating_matrix,"r",encoding="utf-8") as f2:
+        with open("books.txt", "r", encoding="utf-8") as f1, open(rating_matrix, "r", encoding="utf_8") as f2, open(books_read, "r", encoding="utf-8") as f3:
                 lignes = f1.readlines()
                 matrice = f2.readlines()
+                booksRead = f3.readlines()
                 i=0
                 while i<len(lignes) and not profile in lignes[i]:
                         i+=1
@@ -259,6 +283,10 @@ def deleteProfile():
                         for j in range(len(matrice)):
                                 if i!=j:
                                         f.write(matrice[j])
+                with open(books_read,"w",encoding="utf-8") as f:
+                        for j in range(len(booksRead)):
+                                if j != i:
+                                        f.write(booksRead[j])
 
 
 def viewBooks():
@@ -269,7 +297,6 @@ def viewBooks():
                 for ligne in f:
                         i += 1
                         print(i, ":", ligne[:-1])
-                print("\n")
 
 def viewReaders():
         ##This function allows to desplay the list of books by printing the content of the 'books.txt' file
@@ -279,7 +306,6 @@ def viewReaders():
                 for ligne in f:
                         i += 1
                         print(i, ":", ligne[:-1])
-                print("\n")
 
 def addBook():
         ##This function allows the user to add a new book to the list only if it doesn't already exist
@@ -342,7 +368,7 @@ def rateBook():
         global books_read
         global rating_matrix
         viewReaders()
-        user = str(input("enter your pofile name : "))
+        profile = str(input("enter your pofile name : "))
         with open(readers,"r",encoding="utf-8") as f:
                 lignes = f.readlines()
                 i=0
@@ -352,16 +378,59 @@ def rateBook():
                 print("the profile {} is not in the profile database\n".format(profile))
         else:
                 viewBooks()
-                numberBooksRead = str(input("how many books did you read ?"))
+                numberBooksRead = str(input("enter how many book did you read : "))
                 with open(books,"r",encoding="utf-8") as f:
                         booksList=f.readlines()
-                        i=0
+                        j=0
                         booksRead=[]
-                        while i<len(booksList) and i<numberBooksRead:
-                                numberBook= str(input("enter the number of the book read : "))
-                                numberBook = inputVerfication(numberBook,1,len(booksList))
-                                booksRead.append(numberBook)
-                        booksRead.sort()
+                        while j<len(booksList) and j<int(numberBooksRead):
+                                numberBook = int(input("enter the number of the book read : "))
+                                numberBook = int(inputVerfication(str(numberBook),1,len(booksList)))
+                                if not numberBook in booksRead:
+                                        booksRead.append(numberBook)
+                                else:
+                                        print("you already enter the number of this book")
+                                j+=1
+                booksRead.sort(reverse=False)
+                for j in range(len(booksRead)):
+                        booksRead[j] = str(booksRead[j])
+                with open(books_read,"r",encoding="utf-8") as f1, open(rating_matrix,"r",encoding="utf-8") as f2:
+                        lines = f1.readlines()
+                        matrix = f2.readlines()
+                with open(books_read,"w",encoding="utf-8") as f:
+                        for j in range(len(lines)):
+                                if j == i:
+                                        line = lines[j].split(",")
+                                        f.write(line[0].strip("\n")+",")
+                                        f.write(",".join(booksRead))
+                                        f.write("\n")
+                                else:
+                                        f.write(lines[j])
+                book_grade=[]
+                for j in range(len(booksRead)):
+                        grade = str(input("enter a grade for the book {} between 1 and 5 : ".format(booksList[int(booksRead[j])-1])))
+                        grade = inputVerfication(grade,1,5)
+                        book_grade.append(grade)
+                with open(rating_matrix,"w",encoding="utf-8") as f:
+                        ind = 0
+                        for j in range(len(matrix)):
+                                if i == j:
+                                        old_line = matrix[i].strip("\n").split(" ")
+                                        for k in range(len(old_line)):
+                                                new_line = []
+                                                if str(k) in booksRead:
+                                                        print("ok")
+                                                        new_line.append(book_grade[ind])
+                                                        ind += 1
+                                                        print(new_line,book_grade[ind])
+                                                else:
+                                                        new_line.append(old_line[k])
+                                                        print(new_line,old_line[k])
+                                        f.write(" ".join(new_line))
+                                        f.write("\n")
+                                else:
+                                        f.write(matrix[j])
+
 
 #########################################################################################################################
 ##########################################-The Main code starts here-####################################################
@@ -402,9 +471,7 @@ if __name__=='__main__':
                 elif menu_principal == 3:
                         menurecommend()
                         if menu_recommend ==1:
-                                """
-                                Call a function for the reader to rate new books to have more accurate recommendations for the future
-                                """
+                                rateBook()
                         elif menu_recommend ==2:
                                 """
                                 Call function to recommend new book to the reader based on previous grades given
