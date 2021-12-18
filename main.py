@@ -68,7 +68,7 @@ def newprofile():
         global gender
         global age
         global style
-        ##Declaration of global variables we will need in other functions
+        ##Declaration of global variables we will need to use in other functions
         name = str(input("What is your name?\n"))
         gender = str(input("Gender selection\n1 : You are a male\n2 : You are a female\n3 : Other\n"))
         while int(gender)>3 or int(gender)<1:
@@ -314,7 +314,7 @@ def addBook():
                                 f.write(" ".join(new_matrice_line) + "\n")
 
 def matrixCreation():
-        ##This function creates the rating matrix, which takes into account the reader's prerferences
+        ##This function creates the rating matrix, which takes into account the user's reading prerferences
         with open(rating_matrix,"r",encoding="utf_8") as f:
                 lignes = f.readlines()
                 if lignes==[]:
@@ -363,7 +363,7 @@ if __name__=='__main__':
                                 deleteProfile()
                         elif menu_reader ==4:
                                 mainmenu()
-                ##This is the implementation of the 3rd part: the recommendation
+                ##This is the implementation of the 3rd part: the book recommendation
                 elif menu_principal == 3:
                         menurecommend()
                         if menu_recommend ==1:
