@@ -37,12 +37,12 @@ def inputVerfication(user_input,lowerValue,higherValue):
     for i in range(lowerValue,higherValue+1):
         valid_input.append(str(i))
     while user_input not in valid_input:
-        user_input=str(input("wrong value, please enter the value again (must be between {} and {}) : ".format(lowerValue,higherValue)))
+        user_input=str(input("Wrong value, please enter the value again (must be between {} and {}) : ".format(lowerValue,higherValue)))
     return user_input
 
 def menub():
     '''
-    this function displays a sub menu where the user can decide action linked to the list of books.
+    This function displays a sub menu where the user can decide actions linked to the list of books.
     The options are to modify or delete a book, to view the list of books, or to go back to the main menu
     '''
     global menu_book
@@ -92,7 +92,7 @@ def newprofile():
     age = str(input("What is your age group?\n1: Below 18\n2: Between 18 and 25\n3: Above 25\n"))
     verified_age = inputVerfication(age, 1, 3)
     style = str(input(
-        "What is you readin style?\n1 : Science-Fiction\n2 : Biography\n3 : Horror\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
+        "What is you reading style?\n1 : Science-Fiction\n2 : Biography\n3 : Horror\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
     verified_style = inputVerfication(style, 1, 7)
     with open(readers, "a", encoding='utf-8') as f:
         f.write("{},{},{},{}\n".format(name, verified_gender, verified_age, verified_style))
@@ -106,7 +106,6 @@ def newprofile():
     with open(books_read, "a", encoding="utf-8") as f:
         f.write(name+"\n")
     print("Your profile has successfully been added!\n")
-    sleep(2)
     mainmenu()
 
 def modifyProfile():
@@ -128,7 +127,7 @@ def modifyProfile():
         while i < len(lignes) and not profile in lignes[i]:
             i += 1
     if i >= len(lignes):
-        print("the profile {} is not in the profile database".format(profile))
+        print("The profile {} is not in the profile database".format(profile))
     else:
         modif = lignes[i].split(",")
         newProfile = ""
@@ -398,7 +397,7 @@ def bookRead():
     global books
     global books_read
     viewReaders()
-    profile = str(input("Enter your pofile name : "))
+    profile = str(input("Enter your pofile's name : "))
     with open(readers, "r", encoding="utf-8") as f1, open(books,"r",encoding="utf-8") as f2, open(books_read,"r",encoding="utf-8") as f3:
         readers_lines = f1.readlines()
         books_lines = f2.readlines()
@@ -419,7 +418,7 @@ def bookRead():
             if not numberBook in booksRead and not str(numberBook) in books_read_lines[i]:
                 booksRead.append(numberBook)
             else:
-                print("You already enter the number of this book")
+                print("You already enter this book's number")
             j += 1
         booksRead.sort(reverse=False)
         for j in range(len(booksRead)):
@@ -439,7 +438,7 @@ def bookRead():
 def rateBook():
     ##This function allows the user to rate every book in the matrix rating that did not receive a grade already and update 'rating_matrix.txt' accordingly
     viewReaders()
-    profile = str(input("Enter your pofile name : "))
+    profile = str(input("Enter your pofile's name : "))
     with open(readers, "r", encoding="utf-8") as f1, open(books, "r", encoding="utf-8") as f2, open(books_read, "r",encoding="utf-8") as f3, open(rating_matrix,"r",encoding="utf-8") as f4:
         readers_lines = f1.readlines()
         books_lines = f2.readlines()
@@ -453,7 +452,7 @@ def rateBook():
     else:
         profile_read_book = books_read_lines[i].strip("\n").split(",")
         if profile_read_book[1:] != []:
-            print("you have previosly read : ")
+            print("You have previously read : ")
             for j in range(1,len(profile_read_book)):
                 print("{} : {}".format(j,books_lines[int(profile_read_book[j])-1].strip("\n")))
             indice_books_read_lines = 1
@@ -463,7 +462,7 @@ def rateBook():
                     old_line = matrix[j].strip("\n").split(" ")
                     for k in range(len(old_line)):
                         if j == i and k == int(profile_read_book[indice_books_read_lines])-1:
-                            grade = str(input("enter a grade between 1 and 5 for the book {} : ".format(books_lines[k].strip("\n"))))
+                            grade = str(input("Enter a grade between 1 and 5 for the book {} : ".format(books_lines[k].strip("\n"))))
                             grade = inputVerfication(grade,1,5)
                             new_line.append(grade)
                             if indice_books_read_lines != len(profile_read_book)-1:
@@ -472,7 +471,7 @@ def rateBook():
                             new_line.append(old_line[k])
                     f.write(" ".join(new_line)+"\n")
         else:
-            print("You have not read any book\n")
+            print("You have not read any books\n")
 
 def bookRecommandation():
     '''
@@ -491,7 +490,7 @@ def bookRecommandation():
     for i in range(1,len(readers_lines)+1):
         profile_line = readers_lines[i-1].strip("\n").split(",")
         print(i,":",profile_line[0])
-    profile = str(input("enter your profile's name : "))
+    profile = str(input("Enter your profile's name : "))
     i = 0
     while i < len(readers_lines) and not profile in readers_lines[i]:
         i += 1
@@ -529,7 +528,7 @@ def bookRecommandation():
         profile_no_read_book = list(set(profile_book_simil)-set(profile_book_read))
 
         if profile_no_read_book != []:
-            print("we can recommand you these book : ")
+            print("We can recommand you these book : ")
             for j in range(len(profile_no_read_book)):
                 print("{} : {}".format(profile_no_read_book[j],books_lines[int(profile_no_read_book[j])-1].strip("\n")))
 
@@ -624,5 +623,5 @@ if __name__=='__main__':
                 bookRecommandation()
             elif menu_recommend ==4:
                 main_menu = mainmenu()
-    print("Goodbye!")
+    print("Goodbye! See you soon!")
     quit()
