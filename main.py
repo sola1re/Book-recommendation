@@ -22,7 +22,7 @@ books_read = 'booksread.txt'
 rating_matrix = 'rating_matrix.txt'
 
 def mainmenu():
-    ## this function displays the main menu where the user can chose what menu to navigate to: the bbok menu, the reader menu, the recommendation menu, or exit the programm
+    ## This function displays the main menu where the user can chose what menu to navigate to: the bbok menu, the reader menu, the recommendation menu, or exit the programm
     global menu_principal
     menu_principal=0
     print("What menu do you want to navigate to?\n")
@@ -32,9 +32,11 @@ def mainmenu():
     return menu_principal
 
 def inputVerfication(user_input,lowerValue,higherValue):
-    ##this function help streamlined the verification of integers values, it checks if they belong to the interval required
-    while user_input=="":
-    while int(user_input)<lowerValue or int(user_input)>higherValue:
+    ##This function helps streamline the verification of integers values, it checks if they belong to the interval required
+    valid_input = []
+    for i in range(lowerValue,higherValue+1):
+        valid_input.append(str(i))
+    while user_input not in valid_input:
         user_input=str(input("wrong value, please enter the value again (must be between {} and {}) : ".format(lowerValue,higherValue)))
     return user_input
 
@@ -52,7 +54,7 @@ def menub():
     return menu_book
 
 def menureader():
-    ##this function displays a sub menu where the user can add, modify or delete a reader
+    ##This function displays a sub menu where the user can add, modify or delete a reader
     global menu_reader
     menu_reader=0
     print("What do you want to do?\n")
@@ -69,14 +71,14 @@ def menuRecommend():
     global menu_recommend
     menu_recommend=0
     print("What do you want to do?\n")
-    menu_recommend=int(input("1 : add the book you read among the database\n2 : Rate books\n3 : Find a new book\n4 : Go back to the main menu\n"))
+    menu_recommend=int(input("1 : Add the book you read among the database\n2 : Rate books\n3 : Find a new book\n4 : Go back to the main menu\n"))
     while menu_recommend<1 or menu_recommend>4:
-        menu_recommend = int(input("1 : add the book you read among the database\n2 : Rate books\n3 : Find a new book\n4 : Go back to the main menu\n"))
+        menu_recommend = int(input("1 : Add the book you read among the database\n2 : Rate books\n3 : Find a new book\n4 : Go back to the main menu\n"))
     return menu_recommend
 
 def newprofile():
-    t'''
-    his function allows to create a new user profile. It requires ton enter a name, a gender, an age, and a reading preference among those selected
+    '''
+    This function allows to create a new user profile. It requires ton enter a name, a gender, an age, and a reading preference among those selected
     The inputs are secured with a while loop
     '''
     global name
@@ -87,10 +89,10 @@ def newprofile():
     name = str(input("What is your name?\n"))
     gender = str(input("Gender selection\n1 : You are a male\n2 : You are a female\n3 : Other\n"))
     verified_gender = inputVerfication(gender, 1, 3)
-    age = str(input("What is your age group?\n1: below 18\n2: between 18 and 25\n3: above 25\n"))
+    age = str(input("What is your age group?\n1: Below 18\n2: Between 18 and 25\n3: Above 25\n"))
     verified_age = inputVerfication(age, 1, 3)
     style = str(input(
-        "What is you readin style?\n1 : Science-Fiction\n2 : Biography\n3 : Horreur\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
+        "What is you readin style?\n1 : Science-Fiction\n2 : Biography\n3 : Horror\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
     verified_style = inputVerfication(style, 1, 7)
     with open(readers, "a", encoding='utf-8') as f:
         f.write("{},{},{},{}\n".format(name, verified_gender, verified_age, verified_style))
@@ -121,7 +123,7 @@ def modifyProfile():
         books_read_lines = h.readlines()
         for ligne in lignes:
             print(ligne[:-1])
-        profile = str(input("enter the name of the profile you want to modify : "))
+        profile = str(input("Enter the name of the profile you want to modify : "))
         i = 0
         while i < len(lignes) and not profile in lignes[i]:
             i += 1
@@ -130,17 +132,17 @@ def modifyProfile():
     else:
         modif = lignes[i].split(",")
         newProfile = ""
-        name_change = str(input("do you want to change your name(y/n)? "))
+        name_change = str(input("Do you want to change your name(y/n)? "))
         while name_change != 'y' and name_change != 'n':
-            name_change = str(input("do you want to change your name(y/n)? "))
+            name_change = str(input("Do you want to change your name(y/n)? "))
         if name_change == 'y':
             newProfile += str(input("What's your name?\n"))
         else:
             newProfile += str(modif[0])
         newProfile += ","
-        gender_change = str(input("do you want to change your gender(y/n)? "))
+        gender_change = str(input("Do you want to change your gender(y/n)? "))
         while gender_change != 'y' and gender_change != 'n':
-            gender_change = str(input("do you want to change your gender(y/n)? "))
+            gender_change = str(input("Do you want to change your gender(y/n)? "))
         if gender_change == 'y':
             gender = str(input("Gender selection\n1 : You are a male\n2 : You are a female\n3 : Other\n"))
             gender = inputVerfication(gender, 1, 3)
@@ -148,22 +150,21 @@ def modifyProfile():
         else:
             newProfile += str(modif[1])
         newProfile += ","
-        age_change = str(input("do you want to change your age group(y/n)? "))
+        age_change = str(input("Do you want to change your age group(y/n)? "))
         while age_change != 'y' and age_change != 'n':
-            age_change = str(input("do you want to change your age(y/n)? "))
+            age_change = str(input("Do you want to change your age(y/n)? "))
         if age_change == 'y':
-            age = str(input("What is your age group?\n1: below 18\n2: between 18 and 25\n3: above 25\n"))
+            age = str(input("What is your age group?\n1: Below 18\n2: Between 18 and 25\n3: Above 25\n"))
             age = inputVerfication(age, 1, 3)
             newProfile += age
         else:
             newProfile += str(modif[2])
         newProfile += ","
-        style_change = str(input("do you want to change your favourite genre(y/n)? "))
+        style_change = str(input("Do you want to change your favourite genre(y/n)? "))
         while style_change != 'y' and style_change != 'n':
-            genre_change_change = str(input("do you want to change your age(y/n)? "))
+            genre_change_change = str(input("Do you want to change your age(y/n)? "))
         if style_change == 'y':
-            style = str(input(
-                "What is you readin style?\n1 : Science-Fiction\n2 : Biography\n3 : Horreur\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
+            style = str(input("What is you reading style?\n1 : Science-Fiction\n2 : Biography\n3 : Horror\n4 : Romance\n5 : Fable\n6 : History\n7 : Comedy\n"))
             style = inputVerfication(style, 1, 7)
             newProfile += style + "\n"
         else:
@@ -209,9 +210,9 @@ def replaceBook():
         while i < len(lignes) and not book in lignes[i]:
              i += 1
         if i >= len(lignes):
-            print("the book {} is not in the books database".format(book))
+            print("The book {} is not in the books database".format(book))
         else:
-            new_book=str(input("you want to replace the book {} by ".format(book)))
+            new_book=str(input("You want to replace the book {} by ".format(book)))
         with open("books.txt", "w", encoding="utf-8") as f:
             for j in range(len(lignes)):
                 if i == j:
@@ -249,18 +250,18 @@ def deleteBook():
         lignes = f1.readlines()
         matrice = f2.readlines()
         booksRead = f3.readlines()
-    book = str(input("enter the name of the book you want to replace : "))
+    book = str(input("Enter the name of the book you want to replace : "))
     i = 0
     while i < len(lignes) and not book in lignes[i]:
         i += 1
     if i >= len(lignes):
-        print("the book {} is not in the  books of the database\n".format(book))
+        print("The book {} is not in the  books of the database\n".format(book))
     else:
         with open("books.txt", "w", encoding="utf-8") as f:
             for j in range(len(lignes)):
                 if i != j:
                     f.write(lignes[j])
-        print("the book {} has been deleted from the available books\n".format(book))
+        print("The book {} has been deleted from the available books\n".format(book))
         with open(rating_matrix, "w", encoding="utf_8") as f:
             for j in range(len(matrice)):
                 new_matrice_line = []
@@ -285,7 +286,7 @@ def deleteProfile():
     The inputs are all secured with while loops
     '''
     viewReaders()
-    profile = str(input("enter the name of the profile you want to delete : "))
+    profile = str(input("Enter the name of the profile you want to delete : "))
     with open(readers, "r", encoding="utf-8") as f1, open(rating_matrix, "r", encoding="utf_8") as f2, open(books_read, "r", encoding="utf-8") as f3:
         lignes = f1.readlines()
         matrice = f2.readlines()
@@ -294,13 +295,13 @@ def deleteProfile():
     while i < len(lignes) and not profile in lignes[i]:
         i += 1
     if i >= len(lignes):
-        print("the profile {} is not in the profile database\n".format(profile))
+        print("The profile {} is not in the profile database\n".format(profile))
     else:
         with open("readers.txt", "w", encoding="utf-8") as f:
             for j in range(len(lignes)):
                 if i != j:
                     f.write(lignes[j])
-        print("the profile {} has been deleted from the profile list\n".format(profile))
+        print("The profile {} has been deleted from the profile list\n".format(profile))
         with open(rating_matrix, "w", encoding="utf-8") as f:
             for j in range(len(matrice)):
                 if i != j:
@@ -342,14 +343,14 @@ def addBook():
     with open("books.txt", "r", encoding="utf-8") as f1, open(rating_matrix, "r", encoding="utf_8") as f2:
         lignes = f1.readlines()
         matrice = f2.readlines()
-    newbook = str(input("enter the name of the book you want to insert into the database : "))
+    newbook = str(input("Enter the name of the book you want to insert into the database : "))
     i = 0
     while i < len(lignes) and newbook != lignes[i]:
         i += 1
     if i < len(lignes):
-        print("the book {} is already in the  books of the database\n".format(newbook))
+        print("The book {} is already in the  books of the database\n".format(newbook))
     else:
-        print("the book {} has been added to the books of the database\n".format(newbook))
+        print("The book {} has been added to the books of the database\n".format(newbook))
         with open(books, "a", encoding="utf-8") as b:
             b.write(newbook + "\n")
         with open(rating_matrix, "w", encoding="utf-8") as f:
@@ -364,7 +365,7 @@ def addBook():
                 f.write(" ".join(new_matrice_line) + "\n")
 
 def matrixCreation():
-    ##This function creates the rating matrix and initialise every value of the matrix to 0
+    ##This function creates the rating matrix and initialises every value of the matrix to 0
     with open(rating_matrix, "r", encoding="utf_8") as f:
         lignes = f.readlines()
     if lignes == []:
@@ -380,7 +381,7 @@ def matrixCreation():
                 f.write("\n")
 
 def createBookRead():
-    ##this function allows to buil the booksread.txt when the file is empty ith the name of the readers contain in readers.txt
+    ##This function allows to build the 'booksread.txt' file,  when the file is empty ith the name of the readers contain in 'readers.txt'
     with open(books_read,"r",encoding="utf_8") as f:
         lignes = f.readlines()
     if lignes==[]:
@@ -392,12 +393,12 @@ def createBookRead():
                 f1.write("\n")
 
 def bookRead():
-    ##this function allows the user to give the name of the books they read to update the booksread.txt file accordingly
+    ##This function allows the user to give the name of the books they read to update the booksread.txt file accordingly
     global readers
     global books
     global books_read
     viewReaders()
-    profile = str(input("enter your pofile name : "))
+    profile = str(input("Enter your pofile name : "))
     with open(readers, "r", encoding="utf-8") as f1, open(books,"r",encoding="utf-8") as f2, open(books_read,"r",encoding="utf-8") as f3:
         readers_lines = f1.readlines()
         books_lines = f2.readlines()
@@ -406,19 +407,19 @@ def bookRead():
         while i < len(readers_lines) and not profile in readers_lines[i]:
             i += 1
     if i >= len(readers_lines):
-        print("the profile {} is not in the profile database\n".format(profile))
+        print("The profile {} is not in the profile database\n".format(profile))
     else:
         viewBooks()
-        numberBooksRead = str(input("enter how many book did you read : "))
+        numberBooksRead = str(input("Enter how many book did you read : "))
         j = 0
         booksRead = []
         while j < len(books_lines) and j < int(numberBooksRead):
-            numberBook = int(input("enter the number of the book read : "))
+            numberBook = int(input("Enter the number of the book read : "))
             numberBook = int(inputVerfication(str(numberBook), 1, len(books_lines)))
             if not numberBook in booksRead and not str(numberBook) in books_read_lines[i]:
                 booksRead.append(numberBook)
             else:
-                print("you already enter the number of this book")
+                print("You already enter the number of this book")
             j += 1
         booksRead.sort(reverse=False)
         for j in range(len(booksRead)):
@@ -436,9 +437,9 @@ def bookRead():
                     f.write(lines[j])
 
 def rateBook():
-    ##this function allows the user to rate every book in the matrix rating that did not receive a grade already and update rating_matrix.txt accordingly
+    ##This function allows the user to rate every book in the matrix rating that did not receive a grade already and update 'rating_matrix.txt' accordingly
     viewReaders()
-    profile = str(input("enter your pofile name : "))
+    profile = str(input("Enter your pofile name : "))
     with open(readers, "r", encoding="utf-8") as f1, open(books, "r", encoding="utf-8") as f2, open(books_read, "r",encoding="utf-8") as f3, open(rating_matrix,"r",encoding="utf-8") as f4:
         readers_lines = f1.readlines()
         books_lines = f2.readlines()
@@ -448,7 +449,7 @@ def rateBook():
         while i < len(readers_lines) and not profile in readers_lines[i]:
             i += 1
     if i >= len(readers_lines):
-        print("the profile {} is not in the profile database\n".format(profile))
+        print("The profile {} is not in the profile database\n".format(profile))
     else:
         profile_read_book = books_read_lines[i].strip("\n").split(",")
         if profile_read_book[1:] != []:
@@ -471,15 +472,15 @@ def rateBook():
                             new_line.append(old_line[k])
                     f.write(" ".join(new_line)+"\n")
         else:
-            print("you did not read any book\n")
+            print("You have not read any book\n")
 
 def bookRecommandation():
     '''
-    this is the function that recommend books to user using the grade he gave to other book and the other user's grade.
-    Firstly, it check if the profile of the user exsit by checking if the name given by the user exist in the lines of readers.txt by giving the line if it exist.
-    Secondly, it creates the similarity matrix with the grades of users given to books. the matrix is a square matrix, it's number of rows and colomns is equal t othe number of readers.
-    Thirdly, it gaves a list of recommended books that have not been read by the user by comparing the set of books read by the user and the set of books read by the person with similar taste
-    Finally, it allows the user to choose one book among those that have not been read if they exist. if a book is chosen, it will be counted as read and the user will have the choice
+    This is the function that recommend books to user using the grade he gave to other book and the other user's grade.
+    Firstly, it checks if the profile of the user exsits by checking if the name given by the user exists in the lines of 'readers.txt' by giving the line if it exists.
+    Secondly, it creates the similarity matrix with the grades of users given to books. The matrix is a square matrix, it's number of rows and columns is equal to othe number of readers.
+    Thirdly, it gives a list of recommended books that have not been read by the user by comparing the set of books read by the user and the set of books read by the person with similar tastes
+    Finally, it allows the user to choose one book among those that have not been read if they exists. If a book is chosen, it will be counted as read and the user will have the choice
     to rate the book chosen previously
     '''
     with open(rating_matrix,"r",encoding="utf-8") as f1, open(readers,"r",encoding="utf-8") as f2, open(books,"r",encoding="utf-8") as f3, open(books_read,"r",encoding="utf-8") as f4:
@@ -495,7 +496,7 @@ def bookRecommandation():
     while i < len(readers_lines) and not profile in readers_lines[i]:
         i += 1
     if i >= len(readers_lines):
-        print("the profile {} is not in the profile database".format(profile))
+        print("The profile {} is not in the profile database".format(profile))
     else:
         similarity_matrix=[]
         for j in range(len(readers_lines)):
@@ -536,9 +537,9 @@ def bookRecommandation():
             while selection_choice!='y' and selection_choice!='n':
                 selection_choice = str(input("Do you want to select a book (y/n)? "))
             if selection_choice == 'y':
-                selection_book = str(input("enter the number linked to the book you are interested in : " ))
+                selection_book = str(input("Enter the number linked to the book you are interested in : " ))
                 while selection_book not in profile_no_read_book:
-                    selection_book = str(input("enter the number linked to the book you are interested in(it must among those you never read before) : "))
+                    selection_book = str(input("Enter the number linked to the book you are interested in(it must among those you never read before) : "))
                 with open(books_read, "w", encoding="utf-8") as f:
                     for j in range(len(books_read_lines)):
                         if j == i:
@@ -566,14 +567,14 @@ def bookRecommandation():
                             old_line = matrix_lines[j].strip("\n").split(" ")
                             for k in range(len(old_line)):
                                 if j == i and k == int(selection_book) - 1:
-                                    grade = str(input("enter a grade between 1 and 5 for the book {} : ".format(books_lines[k].strip("\n"))))
+                                    grade = str(input("Enter a grade between 1 and 5 for the book {} : ".format(books_lines[k].strip("\n"))))
                                     grade = inputVerfication(grade, 1, 5)
                                     new_line.append(grade)
                                 else:
                                     new_line.append(old_line[k])
                             f.write(" ".join(new_line) + "\n")
                 else:
-                    print(("don't forgtet to grade the book !"))
+                    print(("Don't forget to rate the book !"))
 
 
 
